@@ -1,0 +1,36 @@
+{
+  "extends": ["airbnb-base"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["jest", "@typescript-eslint"],
+  "env": {
+    "node": true,
+    "jest/globals": true
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "rules": {
+    "semi": ["error", "never"],
+    "prefer-template": "off",
+    "max-len": ["warn", { "code": 120 }],
+    "no-console": "off",
+    "no-restricted-syntax": "off",
+    "import/prefer-default-export": "off",
+    "object-curly-newline": ["error", { "consistent": true }],
+    "no-await-in-loop": "off",
+    "prefer-destructuring": "off",
+    "arrow-body-style": "warn",
+    "linebreak-style": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
+    "no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
+    "class-methods-use-this": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.{ts,tsx}"] }]
+  }
+}

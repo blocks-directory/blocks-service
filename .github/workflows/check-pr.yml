@@ -1,0 +1,19 @@
+name: check-pr
+
+on: [pull_request]
+
+jobs:
+  check-pr:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - uses: actions/aws/cli@master
+      - name: install dependencies
+        run: yarn --production=false
+      - name: lint
+        run: yarn lint
+      - name: tsc
+        run: yarn tsc

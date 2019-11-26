@@ -1,0 +1,36 @@
+service:
+  name: blocks-service
+
+plugins:
+  - serverless-webpack
+  - serverless-pseudo-parameters
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  versionFunctions: false
+  memorySize: 256
+  region: us-east-1
+  tracing: false
+  environment:
+    stage: ${self:custom.stage}
+  iamRoleStatements:
+    ${file(roleStatements.yml)}
+
+custom:
+  name: ${self:custom.stage}-${self:service}
+  region: ${opt:region, self:provider.region}
+  stage: ${opt:stage, self:provider.stage}
+
+  dev:
+
+  prod:
+
+functions:
+  get-project-preview:
+    name: ${self:custom.name}-get-project-preview
+    timeout: 15
+    handler: src/handler/get-project-preview.handler
