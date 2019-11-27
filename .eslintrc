@@ -14,7 +14,8 @@
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
-    }
+    },
+    "import/core-modules": ["aws-sdk"]
   },
   "rules": {
     "semi": ["error", "never"],

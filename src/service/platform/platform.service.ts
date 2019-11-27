@@ -2,10 +2,6 @@ import { URL } from 'url'
 import { RepositoryService } from '../repository/repository.service'
 import { serverlessService } from './serverless.service'
 
-export enum ProjectPlatform {
-  SERVERLESS = 'SERVERLESS'
-}
-
 export interface PlatformService {
   getProjectInformation(repositoryService: RepositoryService, repositoryUrl: URL): Promise<any>
   supports(repositoryService: RepositoryService, repositoryUrl: URL): Promise<boolean>

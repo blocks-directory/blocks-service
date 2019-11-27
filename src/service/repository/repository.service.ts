@@ -4,6 +4,7 @@ import { gitHubService } from './github.service'
 export interface RepositoryService {
   getRepositoryProjectData(repositoryUrl: URL): Promise<RepositoryProjectData>
   getFileText(repositoryUrl: URL, path: string): Promise<string>
+  generateProjectId(repositoryUrl: URL): string
 }
 
 export interface RepositoryProjectData {

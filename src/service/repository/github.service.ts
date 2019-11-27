@@ -80,6 +80,12 @@ export class GitHubService implements RepositoryService {
 
     return downloadFileResponse.text()
   }
+
+  generateProjectId(repositoryUrl: URL) {
+    const [_, owner, repo] = repositoryUrl.pathname.split('/')
+
+    return `github/${owner}/${repo}`
+  }
 }
 
 export const gitHubService = new GitHubService()

@@ -26,6 +26,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
 
   dev:
+    elasticSearchEndpoint: https://search-blocks-directory-es-mm6tu3k7a7og667ephm5nn6rtm.us-east-1.es.amazonaws.com
 
   prod:
 
@@ -34,3 +35,27 @@ functions:
     name: ${self:custom.name}-get-project-preview
     timeout: 15
     handler: src/handler/get-project-preview.handler
+
+  create-project:
+    name: ${self:custom.name}-create-project
+    timeout: 15
+    handler: src/handler/create-project.handler
+    environment:
+      elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
+
+resources:
+  Resources:
+    Tenants:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.name}-projects
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST

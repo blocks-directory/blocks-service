@@ -1,7 +1,8 @@
 import { URL } from 'url'
 import * as YAML from 'yaml'
 import { RepositoryService } from '../repository/repository.service'
-import { PlatformService, ProjectPlatform } from './platform.service'
+import { PlatformService } from './platform.service'
+import { ProjectPlatform } from '../../entity/project-platform'
 
 export class ServerlessService implements PlatformService {
   async getProjectInformation(repositoryService: RepositoryService, repositoryUrl: URL) {

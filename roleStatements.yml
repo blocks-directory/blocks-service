@@ -10,3 +10,15 @@
     - "xray:PutTelemetryRecords"
   Resource:
     - "*"
+
+- Effect: "Allow"
+  Action:
+    - "es:*"
+  Resource:
+    - "*"
+
+- Effect: "Allow"
+  Action:
+    - "dynamodb:PutItem"
+  Resource:
+    - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.stage}-blocks-service-projects"

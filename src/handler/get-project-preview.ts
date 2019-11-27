@@ -1,8 +1,7 @@
-import { URL } from 'url'
-import { getRepositoryService } from '../service/repository/repository.service'
-import { getPlatformService, ProjectPlatform } from '../service/platform/platform.service'
+import { ProjectPlatform } from '../entity/project-platform'
+import { projectService } from '../service/project/project.service'
 
-export interface Project {
+export interface ProjectPreview {
   name: string
   description: string
   platform: ProjectPlatform
@@ -19,19 +18,6 @@ interface GetPreviewRequest {
   repositoryUrl: string
 }
 
-export const handler = async ({ repositoryUrl }: GetPreviewRequest): Promise<Project> => {
-  const parsedUrl = new URL(repositoryUrl)
-
-  const repositoryService = getRepositoryService(parsedUrl)
-
-  const repositoryProjectData = await repositoryService.getRepositoryProjectData(parsedUrl)
-
-  const platformService = await getPlatformService(repositoryService, parsedUrl)
-
-  const additionalProjectData = await platformService.getProjectInformation(repositoryService, parsedUrl)
-
-  return {
-    ...repositoryProjectData,
-    ...additionalProjectData,
-  }
-}
+export const handler = async ({ repositoryUrl }: GetPreviewRequest): Promise<ProjectPreview> => (
+  projectService.collectProjectData(repositoryUrl)
+)
