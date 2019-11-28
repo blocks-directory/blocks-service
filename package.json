@@ -17,6 +17,7 @@
     "@acuris/aws-es-connection": "^1.0.1",
     "@aws/dynamodb-data-mapper": "^0.7.3",
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
+    "@aws/dynamodb-auto-marshaller": "^0.7.1",
     "@elastic/elasticsearch": "^7.4.0",
     "@octokit/rest": "^16.35.0",
     "lodash-es": "^4.17.15",

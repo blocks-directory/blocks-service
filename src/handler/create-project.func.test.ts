@@ -5,7 +5,7 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb'
 
 import './func-test.env'
 import { Project } from '../entity/project'
-import {elasticSearchService, getElasticSearchClient} from '../service/elasticsearch.service'
+import { elasticSearchService, getElasticSearchClient } from '../service/elasticsearch.service'
 
 
 const lambdaClient = new AWS.Lambda({ region: 'us-east-1' })
