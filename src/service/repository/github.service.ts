@@ -3,7 +3,12 @@ import { URL } from 'url'
 import fetch from 'node-fetch'
 import { RepositoryProjectData, RepositoryService } from './repository.service'
 
-const octokit = new Octokit()
+const octokit = new Octokit({
+  auth: {
+    clientId: 'Iv1.77875a875be13a04',
+    clientSecret: 'ff32bece605014347b030f9c9460ee875b15ad8b',
+  },
+})
 
 export class GitHubService implements RepositoryService {
   async countPullRequests(owner: string, repo: string) {

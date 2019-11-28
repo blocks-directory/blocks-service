@@ -5,7 +5,7 @@ import { Project } from '../../entity/project'
 import { getRepositoryService } from '../repository/repository.service'
 import { getPlatformService } from '../platform/platform.service'
 import { ProjectPreview } from '../../handler/get-project-preview'
-import { getElasticSearchClient } from '../elasticsearch.service'
+import { elasticSearchService } from '../elasticsearch.service'
 
 export class ProjectService {
   private mapper = new DataMapper({
@@ -15,17 +15,15 @@ export class ProjectService {
   async save(project: Project) {
     const updatedProject = await this.mapper.put(project)
 
-    const elasticSearchClient = await getElasticSearchClient()
-
-    await elasticSearchClient.index({
-      index: `${process.env.stage}-projects-index`,
-      id: project.id,
-      body: {
+    await elasticSearchService.index(
+      `${process.env.stage}-projects-index`,
+      project.id,
+      {
         name: project.name,
         description: project.description,
         platform: project.platform,
       },
-    })
+    )
 
     return updatedProject
   }

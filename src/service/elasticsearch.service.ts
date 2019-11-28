@@ -12,3 +12,28 @@ export const getElasticSearchClient = memoize(async () => {
     }),
   )
 })
+
+export class ElasticSearchService {
+  async index(index: string, id: string, document: any) {
+    const elasticSearchClient = await getElasticSearchClient()
+
+    await elasticSearchClient.index({
+      index,
+      id,
+      body: {
+        ...document,
+      },
+    })
+  }
+
+  async delete(index: string, id: string) {
+    const elasticSearchClient = await getElasticSearchClient()
+
+    await elasticSearchClient.delete({
+      index,
+      id,
+    })
+  }
+}
+
+export const elasticSearchService = new ElasticSearchService()
