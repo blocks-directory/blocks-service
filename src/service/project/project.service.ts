@@ -2,13 +2,13 @@ import { URL } from 'url'
 import { DataMapper } from '@aws/dynamodb-data-mapper'
 import { escape as luceneEscapeQuery } from 'lucene-escape-query'
 import * as DynamoDB from 'aws-sdk/clients/dynamodb'
+import { map } from 'lodash-es'
 import { Project } from '../../entity/project'
 import { getRepositoryService } from '../repository/repository.service'
 import { getPlatformService } from '../platform/platform.service'
 import { ProjectPreview } from '../../handler/get-project-preview/get-project-preview'
 import { elasticSearchService } from '../elasticsearch.service'
 import { ProjectListData } from '../../entity/project-list-data'
-import {map} from "lodash-es";
 
 export class ProjectService {
   private static readonly projectsIndex = `${process.env.stage}-projects-index`;
