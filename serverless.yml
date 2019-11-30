@@ -43,6 +43,11 @@ functions:
     environment:
       elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
 
+  get-project-by-id:
+    name: ${self:custom.name}-get-project-by-id
+    timeout: 15
+    handler: src/handler/get-project-by-id/get-project-by-id.handler
+
   find-projects:
     name: ${self:custom.name}-find-projects
     timeout: 15

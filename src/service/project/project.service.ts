@@ -2,7 +2,7 @@ import { URL } from 'url'
 import { DataMapper } from '@aws/dynamodb-data-mapper'
 import { escape as luceneEscapeQuery } from 'lucene-escape-query'
 import * as DynamoDB from 'aws-sdk/clients/dynamodb'
-import { map } from 'lodash-es'
+import { map, get } from 'lodash-es'
 import { Project } from '../../entity/project'
 import { getRepositoryService } from '../repository/repository.service'
 import { getPlatformService } from '../platform/platform.service'
@@ -96,10 +96,18 @@ export class ProjectService {
     }
   }
 
-  getById(id: string): Promise<Project> {
-    return this.mapper.get(Object.assign(new Project(), {
-      id,
-    }))
+  async getById(id: string): Promise<Project | null> {
+    try {
+      return await this.mapper.get(Object.assign(new Project(), {
+        id,
+      }))
+    } catch (error) {
+      if (get(error, 'name') === 'ItemNotFoundException') {
+        return null
+      }
+
+      throw error
+    }
   }
 
   async delete(id: string) {

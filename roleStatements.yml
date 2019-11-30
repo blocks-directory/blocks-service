@@ -20,5 +20,6 @@
 - Effect: "Allow"
   Action:
     - "dynamodb:PutItem"
+    - "dynamodb:GetItem"
   Resource:
     - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.stage}-blocks-service-projects"
