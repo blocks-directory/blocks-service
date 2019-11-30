@@ -2,7 +2,7 @@ name: nightly-deploy-test
 
 on:
   schedule:
-    - cron:  '0 2 * * * *'
+    - cron:  '0 2 * * *'
 
 jobs:
   build:

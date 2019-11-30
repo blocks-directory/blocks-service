@@ -1,4 +1,4 @@
-name: dev-deply-test
+name: dev-deploy-test
 
 on:
   push:
