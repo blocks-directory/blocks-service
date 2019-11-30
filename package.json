@@ -27,6 +27,7 @@
     "yaml": "^1.7.2"
   },
   "devDependencies": {
+    "serverless": "^1.58.0",
     "@babel/core": "^7.7.4",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.7.4",

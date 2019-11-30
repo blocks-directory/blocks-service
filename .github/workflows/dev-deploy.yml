@@ -19,10 +19,8 @@ jobs:
         run: yarn lint
       - name: tsc
         run: yarn tsc
-      - name: serverless deploy
-        uses: serverless/github-action@master
-        with:
-          args: deploy --force
+      - name: deploy
+        run: yarn deploy --force
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
