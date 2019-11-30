@@ -34,12 +34,19 @@ functions:
   get-project-preview:
     name: ${self:custom.name}-get-project-preview
     timeout: 15
-    handler: src/handler/get-project-preview.handler
+    handler: src/handler/get-project-preview/get-project-preview.handler
 
   create-project:
     name: ${self:custom.name}-create-project
     timeout: 15
-    handler: src/handler/create-project.handler
+    handler: src/handler/create-project/create-project.handler
+    environment:
+      elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
+
+  find-projects:
+    name: ${self:custom.name}-find-projects
+    timeout: 15
+    handler: src/handler/find-projects/find-projects.handler
     environment:
       elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
 

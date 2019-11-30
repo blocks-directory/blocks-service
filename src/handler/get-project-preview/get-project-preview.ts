@@ -1,5 +1,5 @@
-import { ProjectPlatform } from '../entity/project-platform'
-import { projectService } from '../service/project/project.service'
+import { ProjectPlatform } from '../../entity/project-platform'
+import { projectService } from '../../service/project/project.service'
 
 export interface ProjectPreview {
   name: string

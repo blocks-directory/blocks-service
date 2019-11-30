@@ -1,6 +1,6 @@
 import { createAWSConnection, awsCredsifyAll, awsGetCredentials } from '@acuris/aws-es-connection'
 import { Client } from '@elastic/elasticsearch'
-import { memoize } from 'lodash-es'
+import { get, map, memoize } from 'lodash-es'
 
 export const getElasticSearchClient = memoize(async () => {
   const awsCredentials = await awsGetCredentials()
@@ -33,6 +33,28 @@ export class ElasticSearchService {
       index,
       id,
     })
+  }
+
+  async search(index: string, query: string, size: number = 20, offset: number = 0, sort?: string) {
+    const elasticSearchClient = await getElasticSearchClient()
+
+    const searchResult = await elasticSearchClient.search({
+      index,
+      search_type: 'dfs_query_then_fetch',
+      q: query,
+      from: offset,
+      size,
+      sort,
+    })
+
+    const hits = get(searchResult, 'body.hits.hits')
+
+    return map(hits, hit => ({
+      // eslint-disable-next-line no-underscore-dangle
+      id: hit._id,
+      // eslint-disable-next-line no-underscore-dangle
+      ...hit._source,
+    }))
   }
 }
 

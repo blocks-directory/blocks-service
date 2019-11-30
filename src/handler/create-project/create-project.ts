@@ -1,5 +1,4 @@
-import { projectService } from '../service/project/project.service'
-import { Project } from '../entity/project'
+import { projectService } from '../../service/project/project.service'
 
 interface CreateProjectRequest {
   repositoryUrl: string
@@ -8,8 +7,8 @@ interface CreateProjectRequest {
 export const handler = async ({ repositoryUrl }: CreateProjectRequest) => {
   const projectData = await projectService.collectProjectData(repositoryUrl)
 
-  return projectService.save(Object.assign(new Project(), {
+  return projectService.save({
     id: projectService.generateId(repositoryUrl),
     ...projectData,
-  }))
+  })
 }

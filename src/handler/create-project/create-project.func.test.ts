@@ -3,9 +3,9 @@ import { DataMapper } from '@aws/dynamodb-data-mapper'
 import { NumberValue } from '@aws/dynamodb-auto-marshaller'
 import * as DynamoDB from 'aws-sdk/clients/dynamodb'
 
-import './func-test.env'
-import { Project } from '../entity/project'
-import { elasticSearchService, getElasticSearchClient } from '../service/elasticsearch.service'
+import '../../utils/func-test.env'
+import { Project } from '../../entity/project'
+import { elasticSearchService, getElasticSearchClient } from '../../service/elasticsearch.service'
 
 
 const lambdaClient = new AWS.Lambda({ region: 'us-east-1' })
@@ -72,6 +72,9 @@ describe('create a project', () => {
       name: 'cloudkeeper-metrics-service',
       description: null,
       platform: 'SERVERLESS',
+      runtime: expect.any(String),
+      provider: expect.any(String),
+      lastCommitDate: expect.any(String),
     })
   })
 
