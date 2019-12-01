@@ -25,10 +25,12 @@ describe('find projects', () => {
     readmeUrl: 'https://raw.githubusercontent.com/ArsenyYankovsky/pagination-test/master/README.md',
   }))
 
+  const timestamp = new Date().getTime()
+
   const projects = [{
-    id: 'github/ArsenyYankovsky/screenshot-service',
-    name: 'screenshot-service',
-    description: 'screenshot service made with puppeteer',
+    id: `github/ArsenyYankovsky/test-service-${timestamp}`,
+    name: `test-service-${timestamp}`,
+    description: `test service ${timestamp}`,
     platform: ProjectPlatform.SERVERLESS,
     runtime: 'nodejs8.10',
     provider: 'aws',
@@ -38,9 +40,9 @@ describe('find projects', () => {
     lastCommitDate: '2019-11-11T19:09:08Z',
     readmeUrl: 'https://raw.githubusercontent.com/ArsenyYankovsky/screenshot-service/master/README.md',
   }, {
-    id: 'github/ArsenyYankovsky/test-service',
-    name: 'test-service',
-    description: 'something something says screenshot in the description',
+    id: `github/ArsenyYankovsky/test-service-${timestamp}-2`,
+    name: 'test-service-2',
+    description: `test service ${timestamp} uniquedescriptionword`,
     platform: ProjectPlatform.SERVERLESS,
     runtime: 'nodejs8.10',
     provider: 'aws',
@@ -67,11 +69,11 @@ describe('find projects', () => {
     await projectService.saveAll(projects)
   })
 
-  test('search for screenshot', async () => {
+  test('search for timestamp', async () => {
     const response = await lambdaClient.invoke({
       FunctionName: 'dev-blocks-service-find-projects',
       Payload: JSON.stringify({
-        query: 'screenshot',
+        query: timestamp.toString(),
       }),
     }).promise()
 
@@ -79,31 +81,30 @@ describe('find projects', () => {
 
     expect(searchResults).toEqual([
       {
-        id: 'github/ArsenyYankovsky/screenshot-service',
-        name: 'screenshot-service',
-        description: 'screenshot service made with puppeteer',
-        platform: 'SERVERLESS',
-        provider: 'aws',
+        id: `github/ArsenyYankovsky/test-service-${timestamp}`,
+        name: `test-service-${timestamp}`,
+        description: `test service ${timestamp}`,
+        platform: ProjectPlatform.SERVERLESS,
         runtime: 'nodejs8.10',
+        provider: 'aws',
         lastCommitDate: '2019-11-11T19:09:08Z',
-      },
-      {
-        id: 'github/ArsenyYankovsky/test-service',
-        name: 'test-service',
-        description: 'something something says screenshot in the description',
-        platform: 'SERVERLESS',
-        provider: 'aws',
+      }, {
+        id: `github/ArsenyYankovsky/test-service-${timestamp}-2`,
+        name: 'test-service-2',
+        description: `test service ${timestamp} uniquedescriptionword`,
+        platform: ProjectPlatform.SERVERLESS,
         runtime: 'nodejs8.10',
+        provider: 'aws',
         lastCommitDate: '2019-11-11T19:09:08Z',
       },
     ])
   })
 
-  test('search for puppeteer', async () => {
+  test('search for word in a description', async () => {
     const response = await lambdaClient.invoke({
       FunctionName: 'dev-blocks-service-find-projects',
       Payload: JSON.stringify({
-        query: 'puppeteer',
+        query: 'uniquedescriptionword',
       }),
     }).promise()
 
@@ -111,12 +112,12 @@ describe('find projects', () => {
 
     expect(searchResults).toEqual([
       {
-        id: 'github/ArsenyYankovsky/screenshot-service',
-        name: 'screenshot-service',
-        description: 'screenshot service made with puppeteer',
-        platform: 'SERVERLESS',
-        provider: 'aws',
+        id: `github/ArsenyYankovsky/test-service-${timestamp}-2`,
+        name: 'test-service-2',
+        description: `test service ${timestamp} uniquedescriptionword`,
+        platform: ProjectPlatform.SERVERLESS,
         runtime: 'nodejs8.10',
+        provider: 'aws',
         lastCommitDate: '2019-11-11T19:09:08Z',
       },
     ])
