@@ -35,7 +35,7 @@ export class ElasticSearchService {
     })
   }
 
-  async search(index: string, query: string, size: number = 20, offset: number = 0, sort?: string) {
+  async search(index: string, query?: string, size: number = 20, offset: number = 0, sort?: string) {
     const elasticSearchClient = await getElasticSearchClient()
 
     const searchResult = await elasticSearchClient.search({

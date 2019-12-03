@@ -62,9 +62,11 @@ export class ProjectService {
   async find(query: string, offset: number = 0): Promise<ProjectListData[]> {
     const escapedQuery = luceneEscapeQuery(query)
 
+    const queryString = escapedQuery ? `name:"${escapedQuery}" or description:"${escapedQuery}"` : undefined
+
     return elasticSearchService.search(
       `${process.env.stage}-projects-index`,
-      `name:"${escapedQuery}" or description:"${escapedQuery}"`,
+      queryString,
       20,
       offset,
       '_score,_id',
