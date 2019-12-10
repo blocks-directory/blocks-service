@@ -75,6 +75,7 @@ describe('create a project', () => {
       runtime: expect.any(String),
       provider: expect.any(String),
       lastCommitDate: expect.any(String),
+      repositoryUrl: expect.any(String),
     })
   })
 

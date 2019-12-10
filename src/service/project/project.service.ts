@@ -30,6 +30,7 @@ export class ProjectService {
         provider: project.provider,
         runtime: project.runtime,
         lastCommitDate: project.lastCommitDate,
+        repositoryUrl: project.repositoryUrl,
       },
     )
 
@@ -52,6 +53,7 @@ export class ProjectService {
           provider: project.provider,
           runtime: project.runtime,
           lastCommitDate: project.lastCommitDate,
+          repositoryUrl: project.repositoryUrl,
         },
       )
     }
