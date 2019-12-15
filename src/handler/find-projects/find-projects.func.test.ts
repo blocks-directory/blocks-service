@@ -126,6 +126,30 @@ describe('find projects', () => {
     ])
   })
 
+  test('search for a prefix in description', async () => {
+    const response = await lambdaClient.invoke({
+      FunctionName: 'dev-blocks-service-find-projects',
+      Payload: JSON.stringify({
+        query: 'uniquedescription',
+      }),
+    }).promise()
+
+    const searchResults = JSON.parse(response.Payload!.toString())
+
+    expect(searchResults).toEqual([
+      {
+        id: `github/ArsenyYankovsky/test-service-${timestamp}-2`,
+        name: 'test-service-2',
+        description: `test service ${timestamp} uniquedescriptionword`,
+        platform: ProjectPlatform.SERVERLESS,
+        runtime: 'nodejs8.10',
+        provider: 'aws',
+        lastCommitDate: '2019-11-11T19:09:08Z',
+        repositoryUrl: 'https://github.com/ArsenyYankovsky/test-service',
+      },
+    ])
+  })
+
   test('pagination', async () => {
     const response = await lambdaClient.invoke({
       FunctionName: 'dev-blocks-service-find-projects',

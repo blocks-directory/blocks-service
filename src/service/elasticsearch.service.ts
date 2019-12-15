@@ -38,14 +38,20 @@ export class ElasticSearchService {
   async search(index: string, query?: string, size: number = 20, offset: number = 0, sort?: string) {
     const elasticSearchClient = await getElasticSearchClient()
 
-    const searchResult = await elasticSearchClient.search({
+    const queryObject: any = {
       index,
       search_type: 'dfs_query_then_fetch',
-      q: query,
       from: offset,
       size,
       sort,
-    })
+    }
+
+    if (query) {
+      queryObject.q = query
+      queryObject.analyze_wildcard = true
+    }
+
+    const searchResult = await elasticSearchClient.search(queryObject)
 
     const hits = get(searchResult, 'body.hits.hits')
 
