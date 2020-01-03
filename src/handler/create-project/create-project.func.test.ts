@@ -7,7 +7,6 @@ import '../../utils/func-test.env'
 import { Project } from '../../entity/project'
 import { elasticSearchService, getElasticSearchClient } from '../../service/elasticsearch.service'
 
-
 const lambdaClient = new AWS.Lambda({ region: 'us-east-1' })
 const mapper = new DataMapper({
   client: new DynamoDB({ region: 'us-east-1' }),
@@ -18,7 +17,17 @@ describe('create a project', () => {
     const response = await lambdaClient.invoke({
       FunctionName: 'dev-blocks-service-create-project',
       Payload: JSON.stringify({
+        id: 'github/cloudkeeper-io/cloudkeeper-metrics-service',
+        name: 'cloudkeeper-metrics-service',
+        description: null,
+        platform: 'SERVERLESS',
+        runtime: 'nodejs8.10',
+        provider: 'aws',
         repositoryUrl: 'https://github.com/cloudkeeper-io/cloudkeeper-metrics-service',
+        openIssues: 4,
+        pullRequests: 4,
+        lastCommitDate: '2019-11-11T19:09:08Z',
+        readmeUrl: 'https://raw.githubusercontent.com/cloudkeeper-io/cloudkeeper-metrics-service/master/README.md',
       }),
     }).promise()
 

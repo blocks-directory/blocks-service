@@ -31,10 +31,10 @@ custom:
   prod:
 
 functions:
-  get-project-preview:
-    name: ${self:custom.name}-get-project-preview
+  submit-project:
+    name: ${self:custom.name}-submit-project
     timeout: 15
-    handler: src/handler/get-project-preview/get-project-preview.handler
+    handler: src/handler/submit-project/submit-project.handler
 
   create-project:
     name: ${self:custom.name}-create-project
@@ -57,7 +57,8 @@ functions:
 
 resources:
   Resources:
-    Tenants:
+
+    Projects:
       Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain
       Properties:
@@ -69,5 +70,20 @@ resources:
             AttributeType: S
         KeySchema:
           - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    ProjectsToReview:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.name}-projects-to-review
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: repositoryUrl
+            AttributeType: S
+        KeySchema:
+          - AttributeName: repositoryUrl
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST

@@ -6,12 +6,25 @@ import { map, get } from 'lodash-es'
 import { Project } from '../../entity/project'
 import { getRepositoryService } from '../repository/repository.service'
 import { getPlatformService } from '../platform/platform.service'
-import { ProjectPreview } from '../../handler/get-project-preview/get-project-preview'
 import { elasticSearchService } from '../elasticsearch.service'
 import { ProjectListData } from '../../entity/project-list-data'
+import { ProjectPlatform } from '../../entity/project-platform'
+
+export interface ProjectPreview {
+  name: string
+  description: string
+  platform: ProjectPlatform
+  runtime: string
+  provider: string
+  repositoryUrl: string
+  openIssues: number
+  pullRequests: number
+  lastCommitDate: string
+  readmeUrl: string
+}
 
 export class ProjectService {
-  private static readonly projectsIndex = `${process.env.stage}-projects-index`;
+  private static readonly projectsIndex = `${process.env.stage}-projects-index`
 
   private mapper = new DataMapper({
     client: new DynamoDB(),
