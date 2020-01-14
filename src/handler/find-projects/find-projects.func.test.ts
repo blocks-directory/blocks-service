@@ -1,5 +1,5 @@
 import * as AWS from 'aws-sdk'
-import { times, sortBy, map, each } from 'lodash-es'
+import { times, sortBy, map } from 'lodash-es'
 
 import '../../utils/func-test.env'
 import { projectService } from '../../service/project/project.service'

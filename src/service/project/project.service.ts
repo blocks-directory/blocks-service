@@ -139,6 +139,7 @@ export class ProjectService {
     const deleteCriterias = map(ids, id => Object.assign(new Project(), { id }))
 
     for await (const _ of this.mapper.batchDelete(deleteCriterias)) {
+      // ignore
     }
 
     for (const id of ids) {
