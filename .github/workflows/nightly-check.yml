@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - uses: actions/aws/cli@master
+      - uses: chrislennon/action-aws-cli@v1.1
       - name: install dependencies
         run: yarn --production=false
       - name: lint
