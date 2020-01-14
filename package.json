@@ -20,6 +20,7 @@
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "@elastic/elasticsearch": "^7.4.0",
     "@octokit/rest": "^16.35.0",
+    "base-converter": "^1.1.2",
     "lodash-es": "^4.17.15",
     "lucene-escape-query": "^1.0.1",
     "luxon": "^1.11.3",
@@ -27,7 +28,6 @@
     "yaml": "^1.7.2"
   },
   "devDependencies": {
-    "serverless": "^1.58.0",
     "@babel/core": "^7.7.4",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
@@ -53,6 +53,7 @@
     "eslint-plugin-typescript": "^0.14.0",
     "jest": "^24.9.0",
     "jest-junit": "^6.3.0",
+    "serverless": "^1.58.0",
     "serverless-offline": "^3.31.3",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-plugin-tracing": "^2.0.0",

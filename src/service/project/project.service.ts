@@ -138,10 +138,15 @@ export class ProjectService {
   async deleteAll(ids: string[]) {
     const deleteCriterias = map(ids, id => Object.assign(new Project(), { id }))
 
-    await this.mapper.batchDelete(deleteCriterias)
+    for await (const _ of this.mapper.batchDelete(deleteCriterias)) {
+    }
 
     for (const id of ids) {
-      await elasticSearchService.delete(ProjectService.projectsIndex, id)
+      try {
+        await elasticSearchService.delete(ProjectService.projectsIndex, id)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }

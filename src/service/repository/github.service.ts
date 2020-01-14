@@ -1,6 +1,8 @@
 import * as Octokit from '@octokit/rest'
 import { URL } from 'url'
 import fetch from 'node-fetch'
+import * as baseConverter from 'base-converter'
+
 import { RepositoryProjectData, RepositoryService } from './repository.service'
 
 const octokit = new Octokit({
@@ -87,9 +89,9 @@ export class GitHubService implements RepositoryService {
   }
 
   generateProjectId(repositoryUrl: URL) {
-    const [_, owner, repo] = repositoryUrl.pathname.split('/')
+    const repo = repositoryUrl.pathname.split('/')[2]
 
-    return `github/${owner}/${repo}`
+    return `${repo}-${baseConverter.decTo62(new Date().getTime())}`
   }
 }
 

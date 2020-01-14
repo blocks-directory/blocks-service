@@ -43,6 +43,13 @@ functions:
     environment:
       elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
 
+  delete-projects:
+    name: ${self:custom.name}-delete-projects
+    timeout: 15
+    handler: src/handler/delete-projects/delete-projects.handler
+    environment:
+      elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
+
   get-project-by-id:
     name: ${self:custom.name}-get-project-by-id
     timeout: 15

@@ -1,5 +1,5 @@
 import * as AWS from 'aws-sdk'
-import { times, sortBy, map } from 'lodash-es'
+import { times, sortBy, map, each } from 'lodash-es'
 
 import '../../utils/func-test.env'
 import { projectService } from '../../service/project/project.service'
@@ -12,7 +12,7 @@ describe('find projects', () => {
   jest.setTimeout(40000)
 
   const paginationProjects = times(40, i => ({
-    id: `github/ArsenyYankovsky/pagination-test-${i}`,
+    id: `pagination-test-${i}`,
     name: 'pagination',
     description: 'description for pagination test',
     platform: ProjectPlatform.SERVERLESS,
@@ -28,7 +28,7 @@ describe('find projects', () => {
   const timestamp = new Date().getTime()
 
   const projects = [{
-    id: `github/ArsenyYankovsky/test-service-${timestamp}`,
+    id: `test-service-${timestamp}`,
     name: `test-service-${timestamp}`,
     description: `test service ${timestamp}`,
     platform: ProjectPlatform.SERVERLESS,
@@ -40,7 +40,7 @@ describe('find projects', () => {
     lastCommitDate: '2019-11-11T19:09:08Z',
     readmeUrl: 'https://raw.githubusercontent.com/ArsenyYankovsky/screenshot-service/master/README.md',
   }, {
-    id: `github/ArsenyYankovsky/test-service-${timestamp}-2`,
+    id: `test-service-${timestamp}-2`,
     name: 'test-service-2',
     description: `test service ${timestamp} uniquedescriptionword`,
     platform: ProjectPlatform.SERVERLESS,
@@ -52,7 +52,7 @@ describe('find projects', () => {
     lastCommitDate: '2019-11-11T19:09:08Z',
     readmeUrl: 'https://raw.githubusercontent.com/ArsenyYankovsky/test-service/master/README.md',
   }, {
-    id: 'github/ArsenyYankovsky/anomaly-detector-service',
+    id: 'anomaly-detector-service',
     name: 'anomaly-detector-service',
     description: 'this is an anomaly detection service',
     platform: ProjectPlatform.SERVERLESS,
@@ -81,7 +81,7 @@ describe('find projects', () => {
 
     expect(searchResults).toEqual([
       {
-        id: `github/ArsenyYankovsky/test-service-${timestamp}`,
+        id: `test-service-${timestamp}`,
         name: `test-service-${timestamp}`,
         description: `test service ${timestamp}`,
         platform: ProjectPlatform.SERVERLESS,
@@ -90,7 +90,7 @@ describe('find projects', () => {
         lastCommitDate: '2019-11-11T19:09:08Z',
         repositoryUrl: 'https://github.com/ArsenyYankovsky/screenshot-service',
       }, {
-        id: `github/ArsenyYankovsky/test-service-${timestamp}-2`,
+        id: `test-service-${timestamp}-2`,
         name: 'test-service-2',
         description: `test service ${timestamp} uniquedescriptionword`,
         platform: ProjectPlatform.SERVERLESS,
@@ -114,7 +114,7 @@ describe('find projects', () => {
 
     expect(searchResults).toEqual([
       {
-        id: `github/ArsenyYankovsky/test-service-${timestamp}-2`,
+        id: `test-service-${timestamp}-2`,
         name: 'test-service-2',
         description: `test service ${timestamp} uniquedescriptionword`,
         platform: ProjectPlatform.SERVERLESS,
@@ -138,7 +138,7 @@ describe('find projects', () => {
 
     expect(searchResults).toEqual([
       {
-        id: `github/ArsenyYankovsky/test-service-${timestamp}-2`,
+        id: `test-service-${timestamp}-2`,
         name: 'test-service-2',
         description: `test service ${timestamp} uniquedescriptionword`,
         platform: ProjectPlatform.SERVERLESS,

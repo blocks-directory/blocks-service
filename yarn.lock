@@ -2007,6 +2007,11 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base-converter@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/base-converter/-/base-converter-1.1.2.tgz#3abd417c6277c28bc3dedb6ac1af16d4b720615a"
+  integrity sha1-Or1BfGJ3wovD3ttqwa8W1LcgYVo=
+
 base64-js@^1.0.2:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.1.tgz#58ece8cb75dd07e71ed08c736abc5fac4dbf8df1"
