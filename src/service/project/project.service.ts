@@ -30,6 +30,10 @@ export class ProjectService {
     client: new DynamoDB(),
   })
 
+  findAll() {
+    return this.mapper.scan(Project)
+  }
+
   async save(project: Project) {
     const updatedProject = await this.mapper.put(Object.assign(new Project(), project))
 

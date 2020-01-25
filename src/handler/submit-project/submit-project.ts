@@ -10,7 +10,6 @@ const mapper = new DataMapper({
   client: new DynamoDB(),
 })
 
-
 export const handler = async ({ repositoryUrl }: SubmitProjectReview) => (
   mapper.put(Object.assign(new ProjectToReview(), { repositoryUrl }))
 )

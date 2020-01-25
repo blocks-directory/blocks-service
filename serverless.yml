@@ -17,6 +17,8 @@ provider:
   tracing: false
   environment:
     stage: ${self:custom.stage}
+    githubToken: ${ssm:githubToken}
+    elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
   iamRoleStatements:
     ${file(roleStatements.yml)}
 
@@ -40,15 +42,11 @@ functions:
     name: ${self:custom.name}-create-project
     timeout: 15
     handler: src/handler/create-project/create-project.handler
-    environment:
-      elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
 
   delete-projects:
     name: ${self:custom.name}-delete-projects
     timeout: 15
     handler: src/handler/delete-projects/delete-projects.handler
-    environment:
-      elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
 
   get-project-by-id:
     name: ${self:custom.name}-get-project-by-id
@@ -59,8 +57,13 @@ functions:
     name: ${self:custom.name}-find-projects
     timeout: 15
     handler: src/handler/find-projects/find-projects.handler
-    environment:
-      elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
+
+  update-projects:
+    name: ${self:custom.name}-update-projects
+    timeout: 600
+    handler: src/handler/update-projects/update-projects.handler
+    events:
+      - schedule: cron(0 1 * * ? *)
 
 resources:
   Resources:

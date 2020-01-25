@@ -6,10 +6,7 @@ import * as baseConverter from 'base-converter'
 import { RepositoryProjectData, RepositoryService } from './repository.service'
 
 const octokit = new Octokit({
-  auth: {
-    clientId: 'Iv1.77875a875be13a04',
-    clientSecret: 'ff32bece605014347b030f9c9460ee875b15ad8b',
-  },
+  auth: process.env.githubToken,
 })
 
 export class GitHubService implements RepositoryService {
