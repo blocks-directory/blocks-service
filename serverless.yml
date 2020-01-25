@@ -29,14 +29,19 @@ custom:
 
   dev:
     elasticSearchEndpoint: https://search-blocks-directory-es-mm6tu3k7a7og667ephm5nn6rtm.us-east-1.es.amazonaws.com
+    reviewSlackChannel: GS6CNL1L2
 
   prod:
+    reviewSlackChannel: GS7MZ8G1H
 
 functions:
   submit-project:
     name: ${self:custom.name}-submit-project
     timeout: 15
     handler: src/handler/submit-project/submit-project.handler
+    environment:
+      slackToken: ${ssm:slackToken}
+      reviewSlackChannel: ${self:custom.${self:custom.stage}.reviewSlackChannel}
 
   create-project:
     name: ${self:custom.name}-create-project
@@ -67,7 +72,6 @@ functions:
 
 resources:
   Resources:
-
     Projects:
       Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain

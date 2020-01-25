@@ -20,6 +20,7 @@
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "@elastic/elasticsearch": "^7.4.0",
     "@octokit/rest": "^16.35.0",
+    "@slack/web-api": "^5.7.0",
     "base-converter": "^1.1.2",
     "lodash-es": "^4.17.15",
     "lucene-escape-query": "^1.0.1",
