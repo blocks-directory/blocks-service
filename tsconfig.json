@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": ["es2018"],
+    "outDir": "../build"
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../*.js",
+    "**/*.test.ts"
+  ]
+}

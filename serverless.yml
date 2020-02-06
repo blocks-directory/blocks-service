@@ -1,0 +1,104 @@
+service:
+  name: blocks-service
+
+plugins:
+  - serverless-webpack
+  - serverless-pseudo-parameters
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  versionFunctions: false
+  memorySize: 256
+  region: us-east-1
+  tracing: false
+  environment:
+    stage: ${self:custom.stage}
+    githubToken: ${ssm:githubToken}
+    elasticSearchEndpoint: ${self:custom.${self:custom.stage}.elasticSearchEndpoint}
+  iamRoleStatements:
+    ${file(roleStatements.yml)}
+
+custom:
+  name: ${self:custom.stage}-${self:service}
+  region: ${opt:region, self:provider.region}
+  stage: ${opt:stage, self:provider.stage}
+
+  dev:
+    elasticSearchEndpoint: https://search-blocks-directory-es-mm6tu3k7a7og667ephm5nn6rtm.us-east-1.es.amazonaws.com
+    reviewSlackChannel: GS6CNL1L2
+
+  prod:
+    elasticSearchEndpoint: https://search-blocks-directory-es-mm6tu3k7a7og667ephm5nn6rtm.us-east-1.es.amazonaws.com
+    reviewSlackChannel: GS7MZ8G1H
+
+functions:
+  submit-project:
+    name: ${self:custom.name}-submit-project
+    timeout: 15
+    handler: src/handler/submit-project/submit-project.handler
+    environment:
+      slackToken: ${ssm:slackToken}
+      reviewSlackChannel: ${self:custom.${self:custom.stage}.reviewSlackChannel}
+
+  create-project:
+    name: ${self:custom.name}-create-project
+    timeout: 15
+    handler: src/handler/create-project/create-project.handler
+
+  delete-projects:
+    name: ${self:custom.name}-delete-projects
+    timeout: 15
+    handler: src/handler/delete-projects/delete-projects.handler
+
+  get-project-by-id:
+    name: ${self:custom.name}-get-project-by-id
+    timeout: 15
+    handler: src/handler/get-project-by-id/get-project-by-id.handler
+
+  find-projects:
+    name: ${self:custom.name}-find-projects
+    timeout: 15
+    handler: src/handler/find-projects/find-projects.handler
+
+  update-projects:
+    name: ${self:custom.name}-update-projects
+    timeout: 600
+    handler: src/handler/update-projects/update-projects.handler
+    events:
+      - schedule: cron(0 1 * * ? *)
+
+resources:
+  Resources:
+    Projects:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.name}-projects
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    ProjectsToReview:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.name}-projects-to-review
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: repositoryUrl
+            AttributeType: S
+        KeySchema:
+          - AttributeName: repositoryUrl
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
