@@ -11,6 +11,7 @@ interface CreateProjectRequest {
   openIssues: number
   pullRequests: number
   lastCommitDate: string
+  writtenIn: string
   readmeUrl: string
 }
 

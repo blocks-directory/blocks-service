@@ -23,6 +23,9 @@ export class Project {
   provider?: string | null
 
   @attribute()
+  writtenIn?: string | null
+
+  @attribute()
   repositoryUrl: string
 
   @attribute()

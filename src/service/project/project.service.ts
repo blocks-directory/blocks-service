@@ -46,6 +46,7 @@ export class ProjectService {
         platform: project.platform,
         provider: project.provider,
         runtime: project.runtime,
+        writtenIn: project.writtenIn,
         lastCommitDate: project.lastCommitDate,
         repositoryUrl: project.repositoryUrl,
       },
