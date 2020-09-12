@@ -25,7 +25,7 @@
     "lodash-es": "^4.17.15",
     "lucene-escape-query": "^1.0.1",
     "luxon": "^1.11.3",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "yaml": "^1.7.2"
   },
   "devDependencies": {
